@@ -1,14 +1,4 @@
 export default function GameBoard({ onSelectButton, board }) {
-  // const [gameBoard, setGameBoard] = useState(Board);
-  // function handleBoard(rowIndex, colIndex) {
-  //   setGameBoard((gameBoard) => {
-  //     const updatedBoard = [...gameBoard.map((innerArray) => [...innerArray])];
-  //     updatedBoard[rowIndex][colIndex] = active;
-
-  //     return updatedBoard;
-  //   });
-  //   onSelectButton();
-  // }
 
   return (
     <ol id="game-board">
