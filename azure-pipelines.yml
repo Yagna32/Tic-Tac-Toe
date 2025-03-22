@@ -16,18 +16,12 @@ steps:
   inputs:
     containerRegistry: 'SCdockerhub-yagna32'
     command: 'login'
-- task: Docker@2
-  inputs:
-    command: 'build'
-    Dockerfile: '**/Dockerfile'
-    arguments: '-t $(DOCKERHUB_USERNAME)/$(IMAGE_NAME):$(IMAGE_TAG)'
 
 - task: Docker@2
   inputs:
     containerRegistry: 'SCdockerhub-yagna32'
-    command: 'push'
-    tags: '$(IMAGE_TAG)'
-
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
 ### 📥 Pull the Image from Docker Hub
 - script: |
     echo "Pulling Docker image from Docker Hub..."
