@@ -14,8 +14,7 @@ steps:
   inputs:
     command: 'build'
     Dockerfile: '**/Dockerfile'
-    tags: 'pipeline-ttt'
-    
+    arguments: '-t pipeline-ttt'
 - task: PowerShell@2
   inputs:
     targetType: 'inline'
