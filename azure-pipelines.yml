@@ -26,7 +26,7 @@ steps:
   inputs:
     containerRegistry: 'SCdockerhub-yagna32'
     command: 'push'
-
+    tags: '$(IMAGE_TAG)'
 
 ### 📥 Pull the Image from Docker Hub
 - script: |
