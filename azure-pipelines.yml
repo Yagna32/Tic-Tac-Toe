@@ -9,12 +9,38 @@ trigger:
 pool:
   name: 'First Pool'
 
+variables:
+  IMAGE_TAG: '$(Build.BuildId)'  # Unique tag for each build
 steps:
+- task: Docker@2
+  inputs:
+    containerRegistry: 'SCdockerhub-yagna32'
+    command: 'login'
 - task: Docker@2
   inputs:
     command: 'build'
     Dockerfile: '**/Dockerfile'
-    arguments: '-t pipeline-ttt'
+    arguments: '-t $(DOCKERHUB_USERNAME)/$(IMAGE_NAME):$(IMAGE_TAG)'
+
+- task: Docker@2
+  inputs:
+    containerRegistry: 'SCdockerhub-yagna32'
+    command: 'push'
+
+
+### 📥 Pull the Image from Docker Hub
+- script: |
+    echo "Pulling Docker image from Docker Hub..."
+    docker pull $(DOCKERHUB_USERNAME)/$(IMAGE_NAME):$(IMAGE_TAG)
+  displayName: 'Pull Docker Image'
+
+### 🛑 Stop & Remove Old Containers (If Running)
+- script: |
+    echo "Stopping old container (if exists)..."
+    docker stop $(IMAGE_NAME) || true
+    docker rm $(IMAGE_NAME) || true
+  displayName: 'Stop and Remove Existing Container'
+
 - task: PowerShell@2
   inputs:
     targetType: 'inline'
@@ -26,6 +52,6 @@ steps:
       pwd
       docker stop pipeline-ttt
       docker rm pipeline-ttt
-      docker run -d --name pipeline-ttt -p 5173:5173 pipeline-ttt
+      docker run -d --name $(IMAGE_NAME) -p 5173:5173 $(DOCKERHUB_USERNAME)/$(IMAGE_NAME):$(IMAGE_TAG)
 
 
