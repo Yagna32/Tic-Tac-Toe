@@ -14,7 +14,7 @@ steps:
   inputs:
     command: 'build'
     Dockerfile: '**/Dockerfile'
-    tags: 'ttt-$(Build.BuildId)'
+    tags: 'pipeline-ttt'
     
 - task: PowerShell@2
   inputs:
@@ -25,6 +25,6 @@ steps:
       Write-Host "Hello World"
       ls
       pwd
-      docker image ls
+      docker run -d --name pipeline-ttt -p 5173:5173 pipeline-ttt
 
 
