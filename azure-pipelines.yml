@@ -24,6 +24,8 @@ steps:
       Write-Host "Hello World"
       ls
       pwd
+      docker stop pipeline-ttt
+      docker container prune 
       docker run -d --name pipeline-ttt -p 5173:5173 pipeline-ttt
 
 
