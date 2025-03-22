@@ -1,0 +1,33 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+pool:
+  name: 'First Pool'
+
+steps:
+- task: Docker@2
+  inputs:
+    containerRegistry: 'dockerhub_sample063'
+    command: 'login'
+### 📥 Pull the Image from Docker Hub
+- script: |
+    echo "Pulling Docker image from Docker Hub..."
+    docker pull $(DOCKERHUB_USERNAME)/$(IMAGE_NAME):$(IMAGE_TAG)
+  displayName: 'Pull Docker Image'
+
+### 🛑 Stop & Remove Old Containers (If Running)
+# - script: |
+#     echo "Stopping old container (if exists)..."
+#     docker stop $(IMAGE_NAME)
+#     docker rm $(IMAGE_NAME)
+#   displayName: 'Stop and Remove Existing Container'
+
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: |
+      docker run -d --name $(IMAGE_NAME) -p 8080:8080 $(DOCKERHUB_USERNAME)/$(IMAGE_NAME):$(IMAGE_TAG)
+
+
