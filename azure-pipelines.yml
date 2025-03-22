@@ -25,7 +25,7 @@ steps:
       ls
       pwd
       docker stop pipeline-ttt
-      docker container prune 
+      docker rm pipeline-ttt
       docker run -d --name pipeline-ttt -p 5173:5173 pipeline-ttt
 
 
