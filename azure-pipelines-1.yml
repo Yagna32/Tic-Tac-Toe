@@ -18,11 +18,11 @@ steps:
   displayName: 'Pull Docker Image'
 
 ### 🛑 Stop & Remove Old Containers (If Running)
-# - script: |
-#     echo "Stopping old container (if exists)..."
-#     docker stop $(IMAGE_NAME)
-#     docker rm $(IMAGE_NAME)
-#   displayName: 'Stop and Remove Existing Container'
+- script: |
+    echo "Stopping old container (if exists)..."
+    docker stop $(IMAGE_NAME)
+    docker rm $(IMAGE_NAME)
+  displayName: 'Stop and Remove Existing Container'
 
 - task: PowerShell@2
   inputs:
